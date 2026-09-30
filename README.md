@@ -8,12 +8,17 @@ O backend contém apenas os arquivos do projeto atual. A configuração local fi
 
 ## Executar localmente
 
-Com Node.js 22.12+ ou 24 e o `.env` do backend configurado, abra dois terminais.
+Clone o repositório, configure `backend/.env` a partir de `backend/.env.example` e, com Node.js 22.12+ ou 24 e MySQL 8+, abra dois terminais. Execute os comandos abaixo a partir da pasta clonada `PokemonSimulator`.
+
+```powershell
+git clone https://github.com/GustavoGmBr/PokemonSimulator.git
+cd PokemonSimulator
+```
 
 Backend:
 
 ```powershell
-cd E:\Projetos\PokemonSimulator\backend
+cd backend
 npm install
 npm run prisma:generate
 npm run db:migrate
@@ -24,7 +29,7 @@ npm run dev
 Frontend:
 
 ```powershell
-cd E:\Projetos\PokemonSimulator\frontend
+cd frontend
 npm install
 npm run dev
 ```
@@ -44,7 +49,7 @@ Abra http://127.0.0.1:5173. O Vite encaminha `/api` e `/assets` ao backend na po
 - Perfil do treinador com insígnias e histórico de batalhas, capturas e encontros shiny. A aba Missões oferece dez objetivos renovados a cada duas horas, contagem regressiva e resgate individual ou coletivo das recompensas. Tipos usam sprites Sword/Shield da PokéAPI; os golpes mostram efetividade e a escolha de Pokémon para batalha indica vantagem, neutralidade ou desvantagem por tipo.
 - Vitórias contra selvagens e desafios rendem 10 Pokédólares por nível de cada adversário derrotado. Treinadores pagam 1.000/3.000/10.000 Pokédólares e itens conforme a dificuldade, sem Master Bola. Amulet Coin dobra o dinheiro, Lucky Egg dobra XP, e Shiny Charm e Catch Charm melhoram suas chances conforme os desafios da região do Pokémon vencidos.
 - Evolução pela coleção do menu, com requisitos de nível ou item. Mega Evoluções permanentes exigem nível 60 e uma pedra específica; Rayquaza usa a Mega Rayquazatrite. Regressões Primais permanentes de Groudon e Kyogre exigem nível 60 e o Orbe Vermelho ou Azul; G-Max permanente usa a Pedra G-Max universal e concede +50% de HP máximo. Esses itens são de uso único e desaparecem da bolsa ao consumir a última unidade. Necrozma pode se fundir com Solgaleo, Lunala ou ambos; Ultra Necrozma também exige a Pedra Ultra Burst de 150.000 ₽. Os parceiros permanecem na coleção. Mega Pedras custam 50.000 ₽, Orbes Primais 100.000 ₽ e a Pedra G-Max 75.000 ₽.
-- Doce Raro e Doces de EXP P/M/G/GG são recompensas de torneios, não vendidos na loja. Os Doces de EXP concedem 800/3.000/10.000/30.000 XP. Capturar um selvagem concede XP como derrotá-lo. Master Bola é prêmio exclusivo.
+- Doce Raro e Doces de EXP P/M/G/GG são recompensas de torneios, não vendidos na loja. Os Doces de EXP concedem 800/3.000/10.000/30.000 XP. Capturar um selvagem concede XP como derrotá-lo. Master Bola pode ser obtida como prêmio ou com fichas no cassino, mas não é vendida na loja comum.
 - Catálogo local com atributos, tipos, crescimento, evoluções, aprendizado, 781 golpes, 145 itens e sprites das 1.025 espécies de Kanto a Paldea, 97 formas Mega, 2 formas Primal, 34 formas G-Max, 3 formas de Necrozma e 18 tipos.
 
 O jogo não consulta a PokéAPI durante a navegação. Conta, save, inventário e batalhas usam a API e o MySQL. Os sprites chamados de 3D são animações pré-renderizadas, sem câmera giratória. Johto, Hoenn, Sinnoh e Unova 1 abrem após os oito ginásios da região anterior; Unova 2 abre após Alder. Kalos exige vencer Alder e Iris; Alola, Galar e Paldea abrem após os oito desafios iniciais da região anterior. É possível escolher o inicial de qualquer uma das nove gerações ao criar o save.
@@ -54,7 +59,7 @@ O jogo não consulta a PokéAPI durante a navegação. Conta, save, inventário 
 O catálogo e as imagens já estão importados. Para repetir a importação:
 
 ```powershell
-cd E:\Projetos\PokemonSimulator\backend
+cd backend
 npm run catalog:import
 npm run catalog:seed-moves
 # Para buscar novamente os dados e as imagens, ignorando o cache:

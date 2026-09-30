@@ -7,7 +7,7 @@ Base em JavaScript ES Modules, Express 5, Prisma 6 e MySQL. O Prisma está fixad
 Requisitos: Node.js 22 ou superior e MySQL 8.0 ou superior.
 
 ```powershell
-cd E:\Projetos\PokemonSimulator\backend
+cd backend
 npm install
 npm run prisma:generate
 ```
