@@ -1,0 +1,4 @@
+backend/data/catalogo.json linguist-generated -diff
+backend/public/pokemon/** -diff
+backend/public/items/** -diff
+backend/public/types/** -diff

@@ -1,0 +1,12 @@
+ALTER TABLE `Save` ADD COLUMN `fichas` INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE `PokemonCapturado` ADD COLUMN `bolaCaptura` VARCHAR(30) NULL,
+    ADD COLUMN `investimentoItens` INTEGER NOT NULL DEFAULT 0;
+
+CREATE TABLE `CassinoRodada` (
+    `saveId` VARCHAR(30) NOT NULL,
+    `estado` JSON NOT NULL,
+    `criadoEm` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    PRIMARY KEY (`saveId`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+ALTER TABLE `CassinoRodada` ADD CONSTRAINT `CassinoRodada_saveId_fkey` FOREIGN KEY (`saveId`) REFERENCES `Save`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

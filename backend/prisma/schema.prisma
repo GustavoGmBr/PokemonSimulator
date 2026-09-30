@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id           String   @id @default(cuid()) @db.VarChar(30)
+  login        String   @unique @db.VarChar(30)
+  senhaHash    String   @db.VarChar(255)
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+  save         Save?
+}
+
+model Save {
+  id           String             @id @default(cuid()) @db.VarChar(30)
+  usuarioId    String             @unique @db.VarChar(30)
+  nomeTreinador String             @db.VarChar(30)
+  moedas       Int                @default(0)
+  fichas       Int                @default(0)
+  vitorias     Int                @default(0)
+  derrotas     Int                @default(0)
+  iniciadoEm   DateTime?
+  inicialEspecieId Int?
+  criadoEm     DateTime           @default(now())
+  atualizadoEm DateTime           @updatedAt
+  usuario      Usuario            @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  pokemons     PokemonCapturado[]
+  inventario   ItemInventario[]
+  batalhas     Batalha[]
+  desafios     DesafioConcluido[]
+  especiesRegistradas EspecieRegistrada[]
+  eventos      BatalhaEvento[]
+  missoesResgatadas MissaoResgatada[]
+  cassinoRodada CassinoRodada?
+  kitEntregue  Boolean @default(false)
+}
+
+// especieId referencia o catalogo local (1 a 1025).
+// Campo legado preservado para saves antigos; a colecao nao tem limite de membros.
+model PokemonCapturado {
+  id            String   @id @default(cuid()) @db.VarChar(30)
+  saveId        String   @db.VarChar(30)
+  especieId     Int
+  apelido       String?  @db.VarChar(30)
+  nivel         Int      @default(5)
+  experiencia   Int      @default(0)
+  hpAtual       Int
+  shiny         Boolean  @default(false)
+  bolaCaptura   String?  @db.VarChar(30)
+  investimentoItens Int  @default(0)
+  favorito      Boolean  @default(false)
+  megaForma     String?  @db.VarChar(60)
+  gmaxForma     String?  @db.VarChar(60)
+  atributos     Json?
+  golpes        Json?
+  golpesDesbloqueados Json?
+  posicaoTime   Int?
+  capturadoEm   DateTime @default(now())
+  save          Save     @relation(fields: [saveId], references: [id], onDelete: Cascade)
+
+  @@unique([saveId, posicaoTime])
+  @@index([saveId, especieId])
+}
+
+model GolpeBatalha {
+  id        Int    @id
+  nome      String @unique @db.VarChar(80)
+  tipo      String @db.VarChar(30)
+  categoria String @db.VarChar(20)
+  poder     Int
+  precisao  Int?
+  prioridade Int  @default(0)
+  especies  EspecieAtaque[]
+}
+
+model EspecieAtaque {
+  especieId Int
+  posicao   Int
+  golpeId   Int
+  nivelAprendido Int @default(1)
+  golpe     GolpeBatalha @relation(fields: [golpeId], references: [id])
+
+  @@id([especieId, posicao])
+  @@unique([especieId, golpeId])
+}
+
+model Batalha {
+  id        String   @id @default(cuid()) @db.VarChar(30)
+  saveId    String   @unique @db.VarChar(30)
+  versao    Int      @default(0)
+  estado    Json
+  criadoEm  DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+  save      Save     @relation(fields: [saveId], references: [id], onDelete: Cascade)
+}
+
+model DesafioConcluido {
+  saveId    String @db.VarChar(30)
+  desafioId String @db.VarChar(40)
+  vencidoEm DateTime @default(now())
+  save      Save @relation(fields: [saveId], references: [id], onDelete: Cascade)
+
+  @@id([saveId, desafioId])
+}
+
+model EspecieRegistrada {
+  saveId String @db.VarChar(30)
+  especieId Int
+  save Save @relation(fields: [saveId], references: [id], onDelete: Cascade)
+
+  @@id([saveId, especieId])
+}
+
+model ItemInventario {
+  id         String @id @default(cuid()) @db.VarChar(30)
+  saveId     String @db.VarChar(30)
+  itemId     String @db.VarChar(60)
+  quantidade Int    @default(0)
+  save       Save   @relation(fields: [saveId], references: [id], onDelete: Cascade)
+
+  @@unique([saveId, itemId])
+}
+
+model CassinoRodada {
+  saveId    String   @id @db.VarChar(30)
+  estado    Json
+  criadoEm  DateTime @default(now())
+  save      Save     @relation(fields: [saveId], references: [id], onDelete: Cascade)
+}
+
+model BatalhaEvento {
+  id          String   @id @default(cuid()) @db.VarChar(30)
+  saveId      String   @db.VarChar(30)
+  tipo        String   @db.VarChar(30)
+  especieId   Int?
+  regiao      String?  @db.VarChar(30)
+  dificuldade String?  @db.VarChar(30)
+  torneioId   String?  @db.VarChar(30)
+  resultado   String?  @db.VarChar(30)
+  descricao   String   @db.VarChar(180)
+  shiny       Boolean  @default(false)
+  criadoEm    DateTime @default(now())
+  save        Save     @relation(fields: [saveId], references: [id], onDelete: Cascade)
+
+  @@index([saveId, criadoEm])
+  @@index([saveId, tipo, regiao, criadoEm])
+}
+
+model MissaoResgatada {
+  id        String   @id @default(cuid()) @db.VarChar(30)
+  saveId    String   @db.VarChar(30)
+  periodo   Int
+  indice    Int
+  criadoEm  DateTime @default(now())
+  save      Save     @relation(fields: [saveId], references: [id], onDelete: Cascade)
+
+  @@unique([saveId, periodo, indice])
+}

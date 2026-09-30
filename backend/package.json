@@ -1,0 +1,41 @@
+{
+  "name": "pokemon-simulator-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test --test-concurrency=1",
+    "catalog:import": "node scripts/import-catalog.js",
+    "catalog:seed-moves": "node scripts/seed-moves.js",
+    "prisma:generate": "prisma generate",
+    "prisma:validate": "prisma validate",
+    "db:migrate": "prisma migrate deploy",
+    "db:dev": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "zod": "^4.1.12"
+  },
+  "overrides": {
+    "@prisma/config": {
+      "deepmerge-ts": "8.0.2",
+      "effect": "3.22.2"
+    }
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "prisma": "6.19.0",
+    "supertest": "^7.1.4"
+  }
+}
