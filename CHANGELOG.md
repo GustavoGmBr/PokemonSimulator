@@ -1,5 +1,11 @@
 # Histórico de versões
 
+## v0.1.1 — inicializador do jogo
+
+- `iniciar-jogo.cmd` inicia o jogo no Windows com dois cliques, sem abrir dois terminais.
+- `npm start` faz o mesmo em um único terminal em outros sistemas.
+- Primeira execução prepara dependências, Prisma, migrations e golpes; o jogador configura apenas o acesso ao MySQL.
+
 ## v0.1.0 — primeira versão pública
 
 - Conta de treinador, save único, escolha de inicial e coleção das nove gerações.

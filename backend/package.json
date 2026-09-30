@@ -1,9 +1,11 @@
 {
   "name": "pokemon-simulator-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",

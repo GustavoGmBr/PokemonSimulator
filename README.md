@@ -2,20 +2,28 @@
 
 Remake single-player em JavaScript com ES Modules. Frontend React 18 em `frontend/` e API Express/Prisma/MySQL em `backend/`.
 
-Versão pública inicial: **v0.1.0**. O repositório inclui o catálogo e os sprites locais, para que o jogo funcione sem consultar a PokéAPI durante as partidas. Este é um projeto de fã, sem vínculo com Nintendo, Game Freak ou The Pokémon Company. Os dados e sprites Pokémon pertencem aos respectivos titulares; os dados de referência foram obtidos via [PokéAPI](https://pokeapi.co/).
+Versão pública atual: **v0.1.1**. O repositório inclui o catálogo e os sprites locais, para que o jogo funcione sem consultar a PokéAPI durante as partidas. Este é um projeto de fã, sem vínculo com Nintendo, Game Freak ou The Pokémon Company. Os dados e sprites Pokémon pertencem aos respectivos titulares; os dados de referência foram obtidos via [PokéAPI](https://pokeapi.co/).
 
 O backend contém apenas os arquivos do projeto atual. A configuração local fica em `backend/.env`, ignorado pelo Git; `backend/.env.example` documenta as variáveis necessárias sem credenciais reais.
 
 ## Executar localmente
 
-Clone o repositório, configure `backend/.env` a partir de `backend/.env.example` e, com Node.js 22.12+ ou 24 e MySQL 8+, abra dois terminais. Execute os comandos abaixo a partir da pasta clonada `PokemonSimulator`.
+É necessário instalar Node.js 22.12+ e ter acesso a um banco MySQL 8+. O banco e o usuário devem ser criados no MySQL antes da primeira execução. Baixe o ZIP da [release](https://github.com/GustavoGmBr/PokemonSimulator/releases/latest) e extraia-o, ou clone o repositório:
 
 ```powershell
 git clone https://github.com/GustavoGmBr/PokemonSimulator.git
 cd PokemonSimulator
 ```
 
-Backend:
+No Windows, dê dois cliques em **`iniciar-jogo.cmd`**. Na primeira execução, ele cria `backend/.env` com uma chave de sessão aleatória e pede que você preencha `DATABASE_URL` com os dados do seu MySQL. Salve esse arquivo e abra o inicializador novamente. Ele instala as dependências, gera o Prisma Client, aplica as migrations, cadastra os golpes quando necessário, inicia os dois serviços e abre o navegador. Mantenha a janela aberta enquanto joga; `Ctrl+C` encerra o jogo.
+
+Em macOS ou Linux, ou se preferir usar um único terminal, execute `npm start` na pasta raiz. Se o navegador não abrir automaticamente, acesse http://127.0.0.1:5173. O Vite encaminha `/api` e `/assets` ao backend na porta 3334. Se mudar essa porta em `backend/.env`, ajuste também `API_PROXY_TARGET` em `frontend/.env` conforme `frontend/.env.example`.
+
+### Início manual para desenvolvimento
+
+Também é possível iniciar cada serviço separadamente, em dois terminais, após configurar `backend/.env`:
+
+Backend (a partir da pasta raiz):
 
 ```powershell
 cd backend
@@ -26,7 +34,7 @@ npm run catalog:seed-moves
 npm run dev
 ```
 
-Frontend:
+Frontend (em outro terminal, a partir da pasta raiz):
 
 ```powershell
 cd frontend
@@ -34,7 +42,7 @@ npm install
 npm run dev
 ```
 
-Abra http://127.0.0.1:5173. O Vite encaminha `/api` e `/assets` ao backend na porta 3334. Se a porta do backend mudar, configure `API_PROXY_TARGET` no `.env` do frontend conforme `.env.example`.
+Abra http://127.0.0.1:5173.
 
 ## Disponível
 

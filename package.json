@@ -1,0 +1,12 @@
+{
+  "name": "pokemon-simulator",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "start": "node scripts/start-game.js"
+  }
+}
